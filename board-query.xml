@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="selectAllBoard">
+        SELECT board_no, board_title, create_date, mem_nm, read_count
+        FROM v_board WHERE delete_fl = 'N'
+        ORDER BY board_no DESC
+    </entry>
+    <entry key="selectBoardDetail">
+        SELECT board_no, board_title, mem_nm, author_no, create_date, read_count, board_content
+        FROM v_board WHERE board_no = ?
+    </entry>
+    <entry key="insertBoard">
+        INSERT INTO board VALUES(seq_board_no.NEXTVAL, ?, ?, DEFAULT, DEFAULT, DEFAULT, ?)
+    </entry>
+    <entry key="deleteBoard">
+        UPDATE board SET delete_fl = 'Y'
+        WHERE board_no = ? AND author_no = ?
+    </entry>
+</properties>

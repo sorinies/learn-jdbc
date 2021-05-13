@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="signUp">
+        INSERT INTO member VALUES(seq_mem_no.NEXTVAL, ?, ?, ?, ?, ?, DEFAULT, DEFAULT)
+    </entry>
+    <entry key="login">
+        SELECT mem_no, mem_id, mem_nm, mem_phone, mem_gender, join_date
+        FROM member
+        WHERE mem_id = ? AND mem_pw = ? AND scsn_fl = 'N'
+    </entry>
+    <entry key="updateMemberInfo">
+        UPDATE member SET mem_nm = ?, mem_phone = ?
+        WHERE mem_no = ?
+    </entry>
+    <entry key="updatePw">
+        UPDATE member SET mem_pw = ?
+        WHERE mem_pw = ? AND mem_no = ?
+    </entry>
+    <entry key="secession">
+        UPDATE member SET scsn_fl = 'Y'
+        WHERE mem_pw = ? AND mem_no = ?
+    </entry>
+</properties>
