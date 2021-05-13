@@ -55,7 +55,7 @@ public class JDBCView {
           System.out.println("7. 게시글 작성");
           System.out.println("8. 게시글 삭제");
           System.out.println("9. (개선된) 게시글 상세 조회");
-          System.out.println("10. new 게시글 작성");
+          System.out.println("10. (개선된) 게시글 작성");
           System.out.println("11. new 게시글 삭제");
           System.out.println("12. new 게시글 수정");
           System.out.println("0. 로그아웃");
@@ -74,7 +74,7 @@ public class JDBCView {
             case 7: insertBoard(); break;
             case 8: deleteBoard(); break;
             case 9: eSelectBoard(); break;
-            case 10: break;
+            case 10: eInsertBoard(); break;
             case 11: break;
             case 12: break;
             case 0:
@@ -220,7 +220,7 @@ public class JDBCView {
   private void selectAllBoard() {
     try {
       System.out.println("[게시글 목록 조회]");
-      // DB에서 게시글 목록을 조회해서 반환하는 Service 호출
+      // DB 에서 게시글 목록을 조회해서 반환하는 Service 호출
       List<Board> boardList = boardService.selectAllBoard();
       if (boardList.isEmpty()) {
         System.out.println("게시글이 존재하지 않습니다.");
@@ -353,6 +353,41 @@ public class JDBCView {
       System.out.println("정수만 입력해주세요.");
     } catch (Exception err) {
       System.out.println("조회 중 오류 발생");
+      err.printStackTrace();
+    }
+  }
+  private void eInsertBoard() {
+    System.out.println("[개선된 게시글 작성]");
+    System.out.println("제목을 입력하세요:");
+    String boardTitle = sc.nextLine();
+    System.out.println("--- 내용 입력(:q 입력시 입력 종료) ---");
+    StringBuffer sb = new StringBuffer();
+    // String 에 내용 누적시 메모리 낭비가 심함 --> StringBuffer로 해결.
+
+    String str = null; // 입력된 문자열을 임시 저장할 변수
+    while(true) {
+      str = sc.nextLine();
+      if (str.equals(":q")) {
+        break;
+      }
+      sb.append(str);
+      sb.append("\n");
+    }
+
+    try {
+      Board board = boardService.eInsertBoard(boardTitle, sb.toString());
+      if (board == null) {
+        System.out.println("게시글 삽입 실패...");
+      } else {
+        System.out.println("--------------------------------------------------------");
+        System.out.printf("글번호: %d | 제목: %s\n", board.getBoardNo(), board.getBoardTitle());
+        System.out.printf("작성자명: %s | 작성일: %s | 조회수: %d\n", board.getMemNm(), board.getCreateDate(), board.getReadCount());
+        System.out.println("--------------------------------------------------------");
+        System.out.println(board.getBoardContent());
+        System.out.println("--------------------------------------------------------");
+      }
+    } catch (Exception err) {
+      System.out.println("게시글 작성 중 오류 발생");
       err.printStackTrace();
     }
   }

@@ -24,4 +24,11 @@
     <entry key="increaseReadCount">
         UPDATE board SET read_count = read_count + 1 WHERE board_no = ?
     </entry>
+    <entry key="nextBoardNo">
+        SELECT seq_board_no.NEXTVAL AS board_no FROM DUAL
+    </entry>
+    <entry key="eInsertBoard">
+        INSERT INTO board
+        VALUES(?, ?, ?, DEFAULT, DEFAULT, DEFAULT, ?)
+    </entry>
 </properties>

@@ -68,4 +68,21 @@ public class BoardService {
     close(conn);
     return board;
   }
+
+  public Board eInsertBoard(String boardTitle, String boardContent) throws Exception {
+    Connection conn = getConnection();
+    // 1. 삽입될 다음 게시글 번호를 얻어옴.
+    int boardNo = dao.nextBoardNo(conn);
+    // 2. 얻어온 번호를 이용해서 게시글 삽입 진행
+    int result = dao.eInsertBoard(conn, boardNo, boardTitle, boardContent);
+    // 3. 삽입을 성공한 경우 COMMIT -> boardNo를 이용해 새로 작성한 글 상세조회
+    Board board = null;
+    if (result > 0) {
+      commit(conn);
+      board = eSelectBoard(boardNo);
+    } else {
+      rollback(conn);
+    }
+    return board;
+  }
 }

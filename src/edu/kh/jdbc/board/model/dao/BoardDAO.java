@@ -136,4 +136,37 @@ public class BoardDAO {
     }
     return result;
   }
+
+  public int nextBoardNo(Connection conn) throws Exception {
+    int boardNo;
+    try {
+      String sql = prop.getProperty("nextBoardNo");
+      stmt = conn.createStatement();
+      rs = stmt.executeQuery(sql);
+      if (rs.next()) {
+        boardNo = rs.getInt("board_no");
+      }
+    } finally {
+      close(rs);
+      close(stmt);
+    }
+    return 0;
+  }
+
+  public int eInsertBoard(Connection conn, int boardNo, String boardTitle, String boardContent) throws Exception {
+    int result;
+    try {
+      String sql = prop.getProperty("eInsertBoard");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, boardNo);
+      pstmt.setString(2, boardTitle);
+      pstmt.setString(3, boardContent);
+      pstmt.setInt(4, JDBCView.loginMember.getMemNo());
+
+      result = pstmt.executeUpdate();
+    } finally {
+      close(pstmt);
+    }
+    return result;
+  }
 }
