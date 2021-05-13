@@ -238,6 +238,7 @@ public class JDBCView {
       System.out.println("[게시글 상세 조회]");
       System.out.print("조회할 게시글 번호: ");
       int boardNo = sc.nextInt();
+      sc.nextLine();
       Board board = boardService.selectBoard(boardNo);
       if (board == null) {
         System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
