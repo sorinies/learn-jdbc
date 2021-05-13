@@ -31,4 +31,7 @@
         INSERT INTO board
         VALUES(?, ?, ?, DEFAULT, DEFAULT, DEFAULT, ?)
     </entry>
+    <entry key="checkBoardNo">
+        SELECT COUNT(*) FROM v_board WHERE board_no = ? AND delete_fl = 'N'
+    </entry>
 </properties>

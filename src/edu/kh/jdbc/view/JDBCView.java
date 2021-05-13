@@ -56,7 +56,7 @@ public class JDBCView {
           System.out.println("8. 게시글 삭제");
           System.out.println("9. (개선된) 게시글 상세 조회");
           System.out.println("10. (개선된) 게시글 작성");
-          System.out.println("11. new 게시글 삭제");
+          System.out.println("11. (개선된) 게시글 삭제");
           System.out.println("12. new 게시글 수정");
           System.out.println("0. 로그아웃");
           System.out.println("==================================");
@@ -75,7 +75,7 @@ public class JDBCView {
             case 8: deleteBoard(); break;
             case 9: eSelectBoard(); break;
             case 10: eInsertBoard(); break;
-            case 11: break;
+            case 11: eDeleteBoard(); break;
             case 12: break;
             case 0:
               loginMember = null;
@@ -388,6 +388,41 @@ public class JDBCView {
       }
     } catch (Exception err) {
       System.out.println("게시글 작성 중 오류 발생");
+      err.printStackTrace();
+    }
+  }
+  private void eDeleteBoard() {
+    System.out.println("[개선된 게시글 삭제]");
+    System.out.print("삭제할 게시글 번호 입력: ");
+    int boardNo = sc.nextInt();
+    sc.nextLine();
+    try {
+      int result = boardService.checkBoardNo(boardNo);
+      if (result == 0) {
+        System.out.println("번호가 일치하는 게시글이 없습니다.");
+      } else if(board.getMemNo() != loginMember.getMemNo()) {
+        System.out.println("글 작성자가 아닙니다." + board.getMemNo() + "|" + loginMember.getMemNo());
+      } else {
+        System.out.print("삭제하시겠습니까? (Y/N): ");
+        char ch = sc.next().toUpperCase().charAt(0);
+        if(ch == 'Y') {
+          try {
+            int result = boardService.deleteBoard(boardNo);
+            if(result > 0) {
+              System.out.println("게시글이 삭제되었습니다.");
+            }
+          } catch (Exception err) {
+            System.out.println("삭제 중 오류가 발생했습니다.");
+            err.printStackTrace();
+          }
+        } else if(ch == 'N') {
+          System.out.println("게시글 삭제를 취소합니다.");
+        } else {
+          System.out.println("잘못 입력하셨습니다.");
+        }
+      }
+    } catch (Exception err) {
+      System.out.println("게시글 삭제 과정에서 오류 발생.");
       err.printStackTrace();
     }
   }

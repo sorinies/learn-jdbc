@@ -85,4 +85,10 @@ public class BoardService {
     }
     return board;
   }
+
+  public int checkBoardNo(int boardNo) throws Exception {
+    Connection conn = getConnection();
+    int result = dao.checkBoardNo(conn, boardNo);
+    return result;
+  }
 }

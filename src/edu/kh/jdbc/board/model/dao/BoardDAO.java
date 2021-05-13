@@ -169,4 +169,14 @@ public class BoardDAO {
     }
     return result;
   }
+
+  public int checkBoardNo(Connection conn, int boardNo) throws Exception {
+    int result;
+    try {
+
+    } finally {
+
+    }
+    return result;
+  }
 }
