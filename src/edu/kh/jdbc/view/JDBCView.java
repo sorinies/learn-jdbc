@@ -290,7 +290,7 @@ public class JDBCView {
     try {
       Board board = boardService.selectBoard(boardNo);
       if (board == null) {
-        System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+        System.out.println("번호가 일치하는 게시글이 없습니다.");
       } else if(board.getMemNo() != loginMember.getMemNo()) {
         System.out.println("글 작성자가 아닙니다." + board.getMemNo() + "|" + loginMember.getMemNo());
       } else {
@@ -305,7 +305,7 @@ public class JDBCView {
           try {
             int result = boardService.deleteBoard(boardNo);
             if(result > 0) {
-              System.out.println("삭제 성공");
+              System.out.println("게시글이 삭제되었습니다.");
             }
           } catch (Exception err) {
             System.out.println("삭제 중 오류가 발생했습니다.");
