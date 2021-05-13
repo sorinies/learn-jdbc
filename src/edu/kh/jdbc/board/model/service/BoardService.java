@@ -50,4 +50,22 @@ public class BoardService {
     close(conn);
     return result;
   }
+
+  public Board eSelectBoard(int boardNo) throws Exception {
+    Connection conn = getConnection();
+    Board board = dao.eSelectBoard(conn, boardNo);
+    // 조회수 증가 코드
+    if(board != null) {
+      int result = dao.increaseReadCount(conn, boardNo);
+      if(result > 0) {
+        commit(conn);
+        // 이미 조회 수 증가 전에 조회해둔 board 의 readCount 를 UPDATE 된 DB read_count 컬럼 값과 똑같이 1 증가 시킴.
+        board.setReadCount(board.getReadCount() + 1);
+      } else {
+        rollback(conn);
+      }
+    }
+    close(conn);
+    return board;
+  }
 }

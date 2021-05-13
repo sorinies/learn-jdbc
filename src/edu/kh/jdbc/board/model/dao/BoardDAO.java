@@ -100,4 +100,40 @@ public class BoardDAO {
     }
     return result;
   }
+
+  public Board eSelectBoard(Connection conn, int boardNo) throws Exception {
+    Board board = null;
+    try {
+      String sql = prop.getProperty("selectBoard");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, boardNo);
+      rs = pstmt.executeQuery();
+      if(rs.next()) {
+        String boardTitle = rs.getString("board_title");
+        String memNm = rs.getString("mem_nm");
+        int memNo = rs.getInt("author_no");
+        Date createDate = rs.getDate("create_date");
+        int readCount = rs.getInt("read_count");
+        String boardContent = rs.getString("board_content");
+        board = new Board(boardNo, boardTitle, boardContent, createDate, memNm, memNo, readCount);
+      }
+    } finally {
+      close(rs);
+      close(pstmt);
+    }
+    return board;
+  }
+
+  public int increaseReadCount(Connection conn, int boardNo) throws Exception {
+    int result;
+    try {
+      String sql = prop.getProperty("increaseReadCount");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, boardNo);
+      result = pstmt.executeUpdate();
+    } finally {
+      close(pstmt);
+    }
+    return result;
+  }
 }

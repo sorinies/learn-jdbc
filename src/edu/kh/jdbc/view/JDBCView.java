@@ -54,6 +54,7 @@ public class JDBCView {
           System.out.println("6. 게시글 상세 조회");
           System.out.println("7. 게시글 작성");
           System.out.println("8. 게시글 삭제");
+          System.out.println("9. (개선된) 게시글 상세 조회");
           System.out.println("0. 로그아웃");
           System.out.println("==================================");
           System.out.print("메뉴 선택 >> ");
@@ -69,6 +70,7 @@ public class JDBCView {
             case 6: selectBoard(); break;
             case 7: insertBoard(); break;
             case 8: deleteBoard(); break;
+            case 9: eSelectBoard(); break;
             case 0:
               loginMember = null;
               System.out.println("로그아웃 되었습니다.");
@@ -319,6 +321,31 @@ public class JDBCView {
       }
     } catch (Exception err) {
       System.out.println("잘못 입력하셨습니다.");
+      err.printStackTrace();
+    }
+  }
+
+  private void eSelectBoard() {
+    try {
+      System.out.println("[개선된 게시글 상세 조회]");
+      System.out.print("조회할 게시글 번호: ");
+      int boardNo = sc.nextInt();
+      sc.nextLine();
+      Board board = boardService.eSelectBoard(boardNo);
+      if (board == null) {
+        System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+      } else {
+        System.out.println("--------------------------------------------------------");
+        System.out.printf("글번호: %d | 제목: %s\n", board.getBoardNo(), board.getBoardTitle());
+        System.out.printf("작성자명: %s | 작성일: %s | 조회수: %d\n", board.getMemNm(), board.getCreateDate(), board.getReadCount());
+        System.out.println("--------------------------------------------------------");
+        System.out.println(board.getBoardContent());
+        System.out.println("--------------------------------------------------------");
+      }
+    } catch (InputMismatchException err) {
+      System.out.println("정수만 입력해주세요.");
+    } catch (Exception err) {
+      System.out.println("조회 중 오류 발생");
       err.printStackTrace();
     }
   }

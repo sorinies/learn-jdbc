@@ -8,6 +8,7 @@
     </entry>
     <entry key="selectBoard">
         SELECT board_no, board_title, mem_nm, author_no, create_date, read_count, board_content
+        FROM v_board WHERE board_no = ? AND delete_fl = 'N'
     </entry>
     <entry key="insertBoard">
         INSERT INTO board VALUES(seq_board_no.NEXTVAL, ?, ?, DEFAULT, DEFAULT, DEFAULT, ?)
