@@ -296,6 +296,7 @@ public class JDBCView {
     System.out.println("[게시글 삭제]");
     System.out.print("삭제할 게시글 번호 입력: ");
     int boardNo = sc.nextInt();
+    sc.nextLine();
     try {
       Board board = boardService.selectBoard(boardNo);
       if (board == null) {
@@ -399,21 +400,18 @@ public class JDBCView {
     try {
       int result = boardService.checkBoardNo(boardNo);
       if (result == 0) {
-        System.out.println("번호가 일치하는 게시글이 없습니다.");
-      } else if(board.getMemNo() != loginMember.getMemNo()) {
-        System.out.println("글 작성자가 아닙니다." + board.getMemNo() + "|" + loginMember.getMemNo());
+        System.out.println("존재하지 않는 게시글입니다.");
+      } else if (result == -1) {
+        System.out.println("작성하신 글만 삭제할 수 있습니다.");
       } else {
-        System.out.print("삭제하시겠습니까? (Y/N): ");
+        System.out.print("정말로 삭제하시겠습니까? (Y/N): ");
         char ch = sc.next().toUpperCase().charAt(0);
         if(ch == 'Y') {
-          try {
-            int result = boardService.deleteBoard(boardNo);
-            if(result > 0) {
-              System.out.println("게시글이 삭제되었습니다.");
-            }
-          } catch (Exception err) {
-            System.out.println("삭제 중 오류가 발생했습니다.");
-            err.printStackTrace();
+          result = boardService.deleteBoard(boardNo);
+          if (result > 0) {
+            System.out.println("삭제되었습니다.");
+          } else {
+            System.out.println("삭제 실패");
           }
         } else if(ch == 'N') {
           System.out.println("게시글 삭제를 취소합니다.");

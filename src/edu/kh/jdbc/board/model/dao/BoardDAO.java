@@ -138,19 +138,19 @@ public class BoardDAO {
   }
 
   public int nextBoardNo(Connection conn) throws Exception {
-    int boardNo;
+    int result = 0;
     try {
       String sql = prop.getProperty("nextBoardNo");
       stmt = conn.createStatement();
       rs = stmt.executeQuery(sql);
       if (rs.next()) {
-        boardNo = rs.getInt("board_no");
+        result = rs.getInt("board_no");
       }
     } finally {
       close(rs);
       close(stmt);
     }
-    return 0;
+    return result;
   }
 
   public int eInsertBoard(Connection conn, int boardNo, String boardTitle, String boardContent) throws Exception {
@@ -171,11 +171,35 @@ public class BoardDAO {
   }
 
   public int checkBoardNo(Connection conn, int boardNo) throws Exception {
-    int result;
+    int result = 0;
     try {
-
+      String sql = prop.getProperty("checkBoardNo");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, boardNo);
+      rs = pstmt.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt(1);
+      }
     } finally {
-
+      close(rs);
+      close(pstmt);
+    }
+    return result;
+  }
+  public int checkAuthor(Connection conn, int boardNo) throws Exception {
+    int result = 0;
+    try {
+      String sql = prop.getProperty("checkAuthor");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, boardNo);
+      pstmt.setInt(2, JDBCView.loginMember.getMemNo());
+      rs = pstmt.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt(1);
+      }
+    } finally {
+      close(rs);
+      close(pstmt);
     }
     return result;
   }

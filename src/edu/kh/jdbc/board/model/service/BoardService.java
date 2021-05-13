@@ -89,6 +89,15 @@ public class BoardService {
   public int checkBoardNo(int boardNo) throws Exception {
     Connection conn = getConnection();
     int result = dao.checkBoardNo(conn, boardNo);
+    if (result == 0) { // 글 번호 존재하지 않음.
+      return result;
+    } else {
+      result = dao.checkAuthor(conn, boardNo);
+      if (result == 0) { // 작성자가 일치하지 않음.
+        result = -1;
+      }
+    }
+    close(conn);
     return result;
   }
 }

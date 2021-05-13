@@ -34,4 +34,7 @@
     <entry key="checkBoardNo">
         SELECT COUNT(*) FROM v_board WHERE board_no = ? AND delete_fl = 'N'
     </entry>
+    <entry key="checkAuthor">
+        SELECT COUNT(*) FROM v_board WHERE board_no = ? AND author_no = ?
+    </entry>
 </properties>
