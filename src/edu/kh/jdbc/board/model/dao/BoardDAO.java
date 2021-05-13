@@ -27,12 +27,12 @@ public class BoardDAO {
   }
 
   public List<Board> selectAllBoard(Connection conn) throws Exception {
-    List<Board> boardList = null;
+    List<Board> boardList;
     try {
       String sql = prop.getProperty("selectAllBoard");
       stmt = conn.createStatement();
       rs = stmt.executeQuery(sql);
-      boardList = new ArrayList<Board>();
+      boardList = new ArrayList<>();
       while(rs.next()) {
         int boardNo = rs.getInt(1);
         String boardTitle = rs.getString(2);
@@ -52,7 +52,7 @@ public class BoardDAO {
   public Board selectBoard(Connection conn, int boardNo) throws Exception {
     Board board = null;
     try {
-      String sql = prop.getProperty("selectBoardDetail");
+      String sql = prop.getProperty("selectBoard");
       pstmt = conn.prepareStatement(sql);
       pstmt.setInt(1, boardNo);
       rs = pstmt.executeQuery();
@@ -73,7 +73,7 @@ public class BoardDAO {
   }
 
   public int insertBoard(Connection conn, Board board) throws Exception {
-    int result = 0;
+    int result;
     try {
       String sql = prop.getProperty("insertBoard");
       pstmt = conn.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class BoardDAO {
   }
 
   public int deleteBoard(Connection conn, int boardNo) throws Exception {
-    int result = 0;
+    int result;
     try {
       String sql = prop.getProperty("deleteBoard");
       pstmt = conn.prepareStatement(sql);
