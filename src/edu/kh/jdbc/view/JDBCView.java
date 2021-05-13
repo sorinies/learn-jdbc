@@ -55,6 +55,9 @@ public class JDBCView {
           System.out.println("7. 게시글 작성");
           System.out.println("8. 게시글 삭제");
           System.out.println("9. (개선된) 게시글 상세 조회");
+          System.out.println("10. new 게시글 작성");
+          System.out.println("11. new 게시글 삭제");
+          System.out.println("12. new 게시글 수정");
           System.out.println("0. 로그아웃");
           System.out.println("==================================");
           System.out.print("메뉴 선택 >> ");
@@ -71,6 +74,9 @@ public class JDBCView {
             case 7: insertBoard(); break;
             case 8: deleteBoard(); break;
             case 9: eSelectBoard(); break;
+            case 10: break;
+            case 11: break;
+            case 12: break;
             case 0:
               loginMember = null;
               System.out.println("로그아웃 되었습니다.");
