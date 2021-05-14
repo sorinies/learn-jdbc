@@ -41,4 +41,20 @@
         UPDATE board SET board_title = ?, board_content = ?
         WHERE board_no = ?
     </entry>
+    <entry key="selectDeletedBoard">
+        SELECT board_no, board_title, create_date, read_count
+        FROM v_board WHERE delete_fl = 'Y' AND author_no = ?
+        ORDER BY board_no DESC
+    </entry>
+    <entry key="reqRecoverBoard">
+        INSERT INTO req_recover_board
+        VALUE(
+            SELECT author_no, board_no, SYSDATE
+            FROM board
+            WHERE author_no = ? AND board_no = ? AND delete_fl = 'Y'
+        )
+    </entry>
+    <entry key="checkDeletedBoardNo">
+        SELECT COUNT(*) FROM v_board WHERE board_no = ? AND delete_fl = 'Y'
+    </entry>
 </properties>

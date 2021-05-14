@@ -298,4 +298,56 @@ public class BoardDAO {
     }
     return result;
   }
+
+  /**
+   * 삭제된 게시글 목록 조회 DAO
+   * @param conn
+   * @param memNo
+   * @return
+   * @throws Exception
+   */
+  public List<Board> deletedList(Connection conn, int memNo) throws Exception {
+    List<Board> deletedList;
+    try {
+      String sql = prop.getProperty("selectDeletedBoard");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, memNo);
+      rs = pstmt.executeQuery();
+      deletedList = new ArrayList<>();
+      while(rs.next()) {
+        int boardNo = rs.getInt(1);
+        String boardTitle = rs.getString(2);
+        Date createDate = rs.getDate(3);
+        int readCount = rs.getInt(4);
+
+        deletedList.add(new Board(boardNo, boardTitle, createDate, readCount));
+      }
+    } finally {
+      close(rs);
+      close(stmt);
+    }
+    return deletedList;
+  }
+
+  /**
+   * 게시글 복구 신청 DAO
+   * @param conn
+   * @param boardNo
+   * @param memNo
+   * @return result
+   * @throws Exception
+   */
+  public int reqRecoverBoard(Connection conn, int boardNo, int memNo) throws Exception {
+    int result;
+    try {
+      String sql = prop.getProperty("reqRecoverBoard");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, memNo);
+      pstmt.setInt(2, boardNo);
+      result = pstmt.executeUpdate();
+    } finally {
+      close(pstmt);
+    }
+    return result;
+  }
 }

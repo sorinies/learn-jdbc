@@ -163,4 +163,34 @@ public class BoardService {
     }
     return board;
   }
+
+  /**
+   * 삭제한 게시글 목록 조회 Service
+   * @return deletedList
+   * @throws Exception
+   */
+  public List<Board> selectDeletedBoard(int memNo) throws Exception {
+    Connection conn = getConnection();
+    List<Board> deletedList = dao.deletedList(conn, memNo);
+    close(conn);
+    return deletedList;
+  }
+
+  /**
+   * 게시물 복구 신청 Service
+   * @param boardNo
+   * @param memNo
+   * @return result
+   * @throws Exception
+   */
+  public int reqRecoverBoard(int boardNo, int memNo) throws Exception {
+    Connection conn = getConnection();
+    int result = dao.reqRecoverBoard(conn, boardNo, memNo);
+    if(result > 0) {
+      commit(conn);
+    } else {
+      close(conn);
+    }
+    return result;
+  }
 }

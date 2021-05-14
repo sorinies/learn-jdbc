@@ -23,6 +23,14 @@ public class Board {
     this.memNo = memNo;
   }
 
+  public Board(int boardNo, String boardTitle, Date createDate, int readCount) {
+    super();
+    this.boardNo = boardNo;
+    this.boardTitle = boardTitle;
+    this.createDate = createDate;
+    this.readCount = readCount;
+  }
+
   public Board(int boardNo, String boardTitle, Date createDate, String memNm, int readCount) {
     super();
     this.boardNo = boardNo;

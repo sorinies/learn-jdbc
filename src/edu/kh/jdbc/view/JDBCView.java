@@ -5,6 +5,7 @@ import edu.kh.jdbc.board.model.vo.Board;
 import edu.kh.jdbc.member.model.service.MemberService;
 import edu.kh.jdbc.member.model.vo.Member;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -58,6 +59,7 @@ public class JDBCView {
           System.out.println("10. (개선된) 게시글 작성");
           System.out.println("11. (개선된) 게시글 삭제");
           System.out.println("12. 게시글 수정");
+          System.out.println("13. 게시물 복구 신청");
           System.out.println("0. 로그아웃");
           System.out.println("==================================");
           System.out.print("메뉴 선택 >> ");
@@ -77,6 +79,7 @@ public class JDBCView {
             case 10: eInsertBoard(); break;
             case 11: eDeleteBoard(); break;
             case 12: modifyBoard(); break;
+            case 13: reqRecoverBoard(); break;
             case 0:
               loginMember = null;
               System.out.println("로그아웃 되었습니다.");
@@ -489,6 +492,40 @@ public class JDBCView {
         }
       }
     } catch (Exception err) {
+      err.printStackTrace();
+    }
+  }
+
+  /**
+   * 게시물 복구 신청 View
+   */
+  private void reqRecoverBoard() {
+    System.out.println("[게시물 복구 신청]");
+    try {
+      List<Board> deletedList = boardService.selectDeletedBoard(loginMember.getMemNo());
+      if (deletedList.isEmpty()) {
+        System.out.println("삭제된 게시글이 없습니다.");
+      } else {
+        for (Board b : deletedList) {
+          System.out.printf("%d | %s | %s | %s | %d\n",
+              b.getBoardNo(), b.getBoardTitle(), b.getMemNm(), b.getCreateDate().toString(), b.getReadCount());
+        }
+        System.out.println("------------------------------------------------");
+        System.out.print("복구 신청할 게시글 번호 입력: ");
+        int boardNo = sc.nextInt();
+        sc.nextLine();
+        int result = boardService.reqRecoverBoard(boardNo, loginMember.getMemNo());
+        if (result > 0) {
+          System.out.println("복구 신청을 완료 했습니다.");
+        } else {
+          System.out.println("복구 신청 실패..");
+        }
+      }
+    } catch (SQLIntegrityConstraintViolationException err) {
+      // UNIQUE 제약 조건을 위배했다 == 이미 복구가 신청된 게시글
+      System.out.println("이미 복구 신청된 글입니다.");
+    } catch (Exception err) {
+      System.out.println("조회 중 오류 발생");
       err.printStackTrace();
     }
   }
