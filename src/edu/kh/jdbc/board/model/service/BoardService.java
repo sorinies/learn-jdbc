@@ -11,6 +11,11 @@ import static edu.kh.jdbc.common.JDBCTemplate.*;
 public class BoardService {
   private BoardDAO dao = new BoardDAO();
 
+  /**
+   * 게시글 목록 조회 Service
+   * @return boardList
+   * @throws Exception
+   */
   public List<Board> selectAllBoard() throws Exception {
     Connection conn = getConnection();
     List<Board> boardList = dao.selectAllBoard(conn);
@@ -19,6 +24,12 @@ public class BoardService {
     return boardList;
   }
 
+  /**
+   * 게시글 상세 조회 Service
+   * @param boardNo
+   * @return board
+   * @throws Exception
+   */
   public Board selectBoard(int boardNo) throws Exception {
     Connection conn = getConnection();
     Board board = dao.selectBoard(conn, boardNo);
@@ -27,6 +38,12 @@ public class BoardService {
     return board;
   }
 
+  /**
+   * 게시글 작성 Service
+   * @param board
+   * @return result
+   * @throws Exception
+   */
   public int insertBoard(Board board) throws Exception {
     Connection conn = getConnection();
     int result = dao.insertBoard(conn, board);
@@ -39,6 +56,12 @@ public class BoardService {
     return result;
   }
 
+  /**
+   * 게시글 삭제 Service
+   * @param boardNo
+   * @return result
+   * @throws Exception
+   */
   public int deleteBoard(int boardNo) throws Exception {
     Connection conn = getConnection();
     int result = dao.deleteBoard(conn, boardNo);
@@ -51,6 +74,12 @@ public class BoardService {
     return result;
   }
 
+  /**
+   * 개선된 게시글 상세 조회 Service
+   * @param boardNo
+   * @return board
+   * @throws Exception
+   */
   public Board eSelectBoard(int boardNo) throws Exception {
     Connection conn = getConnection();
     Board board = dao.eSelectBoard(conn, boardNo);
@@ -69,6 +98,13 @@ public class BoardService {
     return board;
   }
 
+  /**
+   * 개선된 게시글 작성 Service
+   * @param boardTitle
+   * @param boardContent
+   * @return board
+   * @throws Exception
+   */
   public Board eInsertBoard(String boardTitle, String boardContent) throws Exception {
     Connection conn = getConnection();
     // 1. 삽입될 다음 게시글 번호를 얻어옴.
@@ -86,6 +122,12 @@ public class BoardService {
     return board;
   }
 
+  /**
+   * 작성자 일치 & 게시글 존재(삭제) 여부 확인 Service
+   * @param boardNo
+   * @return result
+   * @throws Exception
+   */
   public int checkBoardNo(int boardNo) throws Exception {
     Connection conn = getConnection();
     int result = dao.checkBoardNo(conn, boardNo);
@@ -101,6 +143,14 @@ public class BoardService {
     return result;
   }
 
+  /**
+   * 게시글 수정 Service
+   * @param boardTitle
+   * @param boardContent
+   * @param boardNo
+   * @return board
+   * @throws Exception
+   */
   public Board modifyBoard(String boardTitle, String boardContent, int boardNo) throws Exception {
     Connection conn = getConnection();
     int result = dao.modifyBoard(conn, boardTitle, boardContent, boardNo);

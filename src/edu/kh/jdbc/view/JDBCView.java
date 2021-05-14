@@ -94,6 +94,9 @@ public class JDBCView {
     } while(sel != 0);
   }
 
+  /**
+   * 로그인 View
+   */
   private void login() {
     System.out.println("[로그인]");
     System.out.print("아이디: ");
@@ -112,6 +115,10 @@ public class JDBCView {
       e.printStackTrace();
     }
   }
+
+  /**
+   * 회원 가입 View
+   */
   private void signUp() {
     System.out.println("[회원 가입]");
     // 아이디 중복 검사는 추후에 진행 예정
@@ -140,6 +147,10 @@ public class JDBCView {
       e.printStackTrace();
     }
   }
+
+  /**
+   * 내 정보 조회 View
+   */
   private void selectMyInfo() {
     System.out.println("[내 정보 조회]");
     System.out.println("아이디: " + loginMember.getMemId());
@@ -149,6 +160,10 @@ public class JDBCView {
     System.out.println((loginMember.getMemGender() + "").equals("M") ? "남자" : "여자");
     System.out.println("가입일: " + loginMember.getJoinDate());
   }
+
+  /**
+   * 회원 정보 수정 View
+   */
   private void updateMemberInfo() {
     System.out.println("[회원 정보 수정]");
     System.out.print("변경할 이름: ");
@@ -167,6 +182,10 @@ public class JDBCView {
       err.printStackTrace();
     }
   }
+
+  /**
+   * 비밀번호 수정 View
+   */
   private void updatePw() {
     System.out.println("[비밀번호 수정]");
     System.out.print("현재 비밀번호: ");
@@ -192,6 +211,10 @@ public class JDBCView {
       System.out.println("변경할 비밀번호가 일치하지 않습니다.");
     }
   }
+
+  /**
+   * 회원 탈퇴 View
+   */
   private void secession() {
     System.out.println("[회원 탈퇴]");
     System.out.print("비밀번호 입력: ");
@@ -217,6 +240,10 @@ public class JDBCView {
       System.out.println("잘못 입력하셨습니다.");
     }
   }
+
+  /**
+   * 게시물 전체 목록 조회 View
+   */
   private void selectAllBoard() {
     try {
       System.out.println("[게시글 목록 조회]");
@@ -333,6 +360,9 @@ public class JDBCView {
     }
   }
 
+  /**
+   * 개선된 게시글 상세 조회 View
+   */
   private void eSelectBoard() {
     try {
       System.out.println("[개선된 게시글 상세 조회]");
@@ -352,6 +382,10 @@ public class JDBCView {
       err.printStackTrace();
     }
   }
+
+  /**
+   * 개선된 게시글 작성 View
+   */
   private void eInsertBoard() {
     System.out.println("[개선된 게시글 작성]");
     System.out.println("제목을 입력하세요:");
@@ -382,6 +416,10 @@ public class JDBCView {
       err.printStackTrace();
     }
   }
+
+  /**
+   * 개선된 게시글 삭제 View
+   */
   private void eDeleteBoard() {
     System.out.println("[개선된 게시글 삭제]");
     System.out.print("삭제할 게시글 번호 입력: ");
@@ -454,6 +492,11 @@ public class JDBCView {
       err.printStackTrace();
     }
   }
+
+  /**
+   * 게시물 상세 출력 View
+   * @param board
+   */
   private void printBoard(Board board) {
     System.out.println("--------------------------------------------------------");
     System.out.printf("글번호: %d | 제목: %s\n", board.getBoardNo(), board.getBoardTitle());

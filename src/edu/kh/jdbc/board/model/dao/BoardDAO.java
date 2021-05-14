@@ -26,6 +26,12 @@ public class BoardDAO {
     }
   }
 
+  /**
+   * 게시글 목록 조회 DAO
+   * @param conn
+   * @return boardList
+   * @throws Exception
+   */
   public List<Board> selectAllBoard(Connection conn) throws Exception {
     List<Board> boardList;
     try {
@@ -49,6 +55,13 @@ public class BoardDAO {
     return boardList;
   }
 
+  /**
+   * 게시글 상세 조회 DAO
+   * @param conn
+   * @param boardNo
+   * @return board
+   * @throws Exception
+   */
   public Board selectBoard(Connection conn, int boardNo) throws Exception {
     Board board = null;
     try {
@@ -72,6 +85,13 @@ public class BoardDAO {
     return board;
   }
 
+  /**
+   * 게시글 작성 DAO
+   * @param conn
+   * @param board
+   * @return result
+   * @throws Exception
+   */
   public int insertBoard(Connection conn, Board board) throws Exception {
     int result;
     try {
@@ -87,6 +107,13 @@ public class BoardDAO {
     return result;
   }
 
+  /**
+   * 게시글 삭제 DAO
+   * @param conn
+   * @param boardNo
+   * @return result
+   * @throws Exception
+   */
   public int deleteBoard(Connection conn, int boardNo) throws Exception {
     int result;
     try {
@@ -101,6 +128,13 @@ public class BoardDAO {
     return result;
   }
 
+  /**
+   * 개선된 게시글 상세 조회 DAO
+   * @param conn
+   * @param boardNo
+   * @return board
+   * @throws Exception
+   */
   public Board eSelectBoard(Connection conn, int boardNo) throws Exception {
     Board board = null;
     try {
@@ -124,6 +158,13 @@ public class BoardDAO {
     return board;
   }
 
+  /**
+   * 조회수 증가 처리 DAO
+   * @param conn
+   * @param boardNo
+   * @return result
+   * @throws Exception
+   */
   public int increaseReadCount(Connection conn, int boardNo) throws Exception {
     int result;
     try {
@@ -137,6 +178,12 @@ public class BoardDAO {
     return result;
   }
 
+  /**
+   * 게시글 삽입 위치 확인 DAO
+   * @param conn
+   * @return result
+   * @throws Exception
+   */
   public int nextBoardNo(Connection conn) throws Exception {
     int result = 0;
     try {
@@ -153,6 +200,15 @@ public class BoardDAO {
     return result;
   }
 
+  /**
+   * 개선된 게시글 작성 DAO
+   * @param conn
+   * @param boardNo
+   * @param boardTitle
+   * @param boardContent
+   * @return result
+   * @throws Exception
+   */
   public int eInsertBoard(Connection conn, int boardNo, String boardTitle, String boardContent) throws Exception {
     int result;
     try {
@@ -170,6 +226,13 @@ public class BoardDAO {
     return result;
   }
 
+  /**
+   * 게시글 존재(삭제) 여부 확인 DAO
+   * @param conn
+   * @param boardNo
+   * @return result
+   * @throws Exception
+   */
   public int checkBoardNo(Connection conn, int boardNo) throws Exception {
     int result = 0;
     try {
@@ -186,6 +249,14 @@ public class BoardDAO {
     }
     return result;
   }
+
+  /**
+   * 작성자 일치 확인 DAO
+   * @param conn
+   * @param boardNo
+   * @return result
+   * @throws Exception
+   */
   public int checkAuthor(Connection conn, int boardNo) throws Exception {
     int result = 0;
     try {
@@ -204,6 +275,15 @@ public class BoardDAO {
     return result;
   }
 
+  /**
+   * 게시글 수정 DAO
+   * @param conn
+   * @param boardTitle
+   * @param boardContent
+   * @param boardNo
+   * @return result
+   * @throws Exception
+   */
   public int modifyBoard(Connection conn, String boardTitle, String boardContent, int boardNo) throws Exception {
     int result = 0;
     try {
