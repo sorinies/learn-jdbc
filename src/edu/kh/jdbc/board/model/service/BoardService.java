@@ -100,4 +100,17 @@ public class BoardService {
     close(conn);
     return result;
   }
+
+  public Board modifyBoard(String boardTitle, String boardContent, int boardNo) throws Exception {
+    Connection conn = getConnection();
+    int result = dao.modifyBoard(conn, boardTitle, boardContent, boardNo);
+    Board board = null;
+    if (result > 0) {
+      commit(conn);
+      board = dao.eSelectBoard(conn, boardNo);
+    } else {
+      rollback(conn);
+    }
+    return board;
+  }
 }

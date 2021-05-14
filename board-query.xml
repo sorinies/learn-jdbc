@@ -37,4 +37,8 @@
     <entry key="checkAuthor">
         SELECT COUNT(*) FROM v_board WHERE board_no = ? AND author_no = ?
     </entry>
+    <entry key="modifyBoard">
+        UPDATE board SET board_title = ?, board_content = ?
+        WHERE board_no = ?
+    </entry>
 </properties>

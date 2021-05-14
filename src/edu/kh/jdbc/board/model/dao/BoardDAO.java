@@ -203,4 +203,19 @@ public class BoardDAO {
     }
     return result;
   }
+
+  public int modifyBoard(Connection conn, String boardTitle, String boardContent, int boardNo) throws Exception {
+    int result = 0;
+    try {
+      String sql = prop.getProperty("modifyBoard");
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, boardTitle);
+      pstmt.setString(2, boardContent);
+      pstmt.setInt(3, boardNo);
+      result = pstmt.executeUpdate();
+    } finally {
+      close(pstmt);
+    }
+    return result;
+  }
 }
